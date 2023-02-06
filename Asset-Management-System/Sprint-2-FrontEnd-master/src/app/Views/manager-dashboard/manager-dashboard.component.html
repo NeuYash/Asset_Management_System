@@ -1,0 +1,174 @@
+<div id="wrapper" class={{sidebarClass}} style="overflow-x: hidden;">
+
+    <div class="row">
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper" class="">
+
+            <ul class="sidebar-nav clickable">
+                <br>
+                <li class="sidebar-brand">
+                    <a class="h2" routerLink="/manager/dashboard">
+                        <i class="fa fa-user-tie"></i> Manager
+                    </a>
+                    <hr>
+                </li>
+                <li [ngStyle]='{"background": router.url.indexOf("/manager/dashboard/allocation/request") !=-1 ? "rgba(255,255,255,0.2)" : "darkslategrey"}'
+                    data-toggle="tooltip" title="Raise reqest for allocation of asset">
+                    <a routerLink='/manager/dashboard/allocation/request'><i class="fa fa-paper-plane"></i> Raise
+                        Request</a>
+                </li>
+                <li [ngStyle]='{"background": router.url == "/manager/dashboard/allocation/view-status" ? "rgba(255,255,255,0.2)" : "darkslategrey"}'
+                    data-toggle="tooltip" title="View status of an asset">
+                    <a routerLink='/manager/dashboard/allocation/view-status'><i class="fa fa-eye"></i> View Status</a>
+                </li>
+                <li [ngStyle]='{"background": router.url == "/manager/dashboard/allocation/view-requests" ? "rgba(255,255,255,0.2)" : "darkslategrey"}'
+                    data-toggle="tooltip" title="View all raised requests">
+                    <a routerLink='/manager/dashboard/allocation/view-requests'><i class="fa fa-th-list"></i> View Asset
+                        Requests</a>
+                </li>
+                <hr>
+                <li [ngStyle]='{"background": router.url == "/manager/dashboard/asset/view" ? "rgba(255,255,255,0.2)" : "darkslategrey"}'
+                    data-toggle="tooltip" title="View all raised requests">
+                    <a routerLink='/manager/dashboard/asset/view'><i class='fas fa-box-open'></i> View
+                        Assets
+                    </a>
+                </li>
+                <hr>
+                <li [ngStyle]='{"background": router.url == "/manager/dashboard/employee/check" ? "rgba(255,255,255,0.2)" : "darkslategrey"}'
+                    data-toggle="tooltip" title="Check if employee exists">
+                    <a routerLink='/manager/dashboard/employee/check'><i class="fa fa-user-check"></i> Check
+                        Employee</a>
+                </li>
+                <li [ngStyle]='{"background": router.url == "/manager/dashboard/employee/view" ? "rgba(255,255,255,0.2)" : "darkslategrey"}'
+                    data-toggle="tooltip" title="List of all employees">
+                    <a routerLink='/manager/dashboard/employee/view'><i class="fa fa-users"></i> View All Employees</a>
+                </li>
+
+                <li [ngStyle]='{"background": router.url == "/manager/dashboard/employee/add" ? "rgba(255,255,255,0.2)" : "darkslategrey"}'
+                    data-toggle="tooltip" title="Add new employee">
+                    <a routerLink='/manager/dashboard/employee/add'><i class="fa fa-user-plus"></i> Add Employee</a>
+                </li>
+
+                <hr>
+                <li class="container" data-toggle="tooltip" title="Log out.">
+                    <button class="btn btn-transparent float-right" (click)='logOut()' style="color: #999999;"><i
+                            class="fa fa-power-off"></i>
+                        Logout</button>
+                </li>
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+        <div class="col-md-12">
+            <!-- Page Content -->
+            &nbsp;&nbsp; <div class={{menuToggleClass}} (click)='toggleClass()'>
+                <div class="bar1"></div>
+                <div class="bar2"></div>
+                <div class="bar3"></div>
+            </div>
+            <div class="float-right">
+                <button class="btn btn-link" data-toggle="modal" data-target="#exampleModal">
+                    <i class="fa fa-question-circle"></i> Tutorial
+                </button>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-xl" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Tutorial</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <img class="d-block w-100" src="../../../assets/ManagerHomePage.png"
+                                            alt="First slide">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img class="d-block w-100" src="../../../assets/RaiseReq Manager.png"
+                                            alt="Second slide">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img class="d-block w-100" src="../../../assets/TrackReqManager.png"
+                                            alt="Third slide">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img class="d-block w-100" src="../../../assets/ViewEmployeesManager.png"
+                                            alt="Third slide">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img class="d-block w-100" src="../../../assets/CheckEmployeeManager.png"
+                                            alt="Third slide">
+                                    </div>
+                                </div>
+                                <a class="carousel-control-prev" href="#carouselExampleControls" role="button"
+                                    data-slide="prev" style="color: black;">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true" style="color: black;"></span>
+                                    <span class="sr-only" style="color: black;">Previous</span>
+                                </a>
+                                <a class="carousel-control-next" href="#carouselExampleControls" role="button"
+                                    data-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div *ngIf='router.url == "/manager/dashboard"' style="padding-top: 6em;">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h1 class="h1 text-center">Overview</h1>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row container">
+                        <div class="card col-md-3 offset-1">
+                            <div class="row">
+                                <div class="col-md-4 card-header" style="background-color: darkslategrey;">
+                                    <h1 style="color: whitesmoke;">{{requestsCount}}</h1>
+                                    <div *ngIf='requestsCount==null' class="spinner-grow" style="color: white;"></div>
+                                </div>
+                                <div class="col-md-8 card-body">
+                                    <p class="h4">Raised Requests</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card col-md-3 offset-1">
+                            <div class="row">
+                                <div class="col-md-4 card-header" style="background-color: darkslategrey;">
+                                    <h1 style="color: whitesmoke;">{{pendingCount}}</h1>
+                                    <div *ngIf='pendingCount==null' class="spinner spinner-grow"
+                                        style="color: whitesmoke;"></div>
+                                </div>
+                                <div class="col-md-8 card-body">
+                                    <p class="h4">Requests Pending</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card col-md-3 offset-1">
+                            <div class="row">
+                                <div class="col-md-4 card-header" style="background-color: darkslategrey;">
+                                    <h1 style="color: whitesmoke;">{{employeeCount}}</h1>
+                                    <div *ngIf='employeeCount==null' class="spinner spinner-grow"
+                                        style="color: whitesmoke;"></div>
+                                </div>
+                                <div class="col-md-8 card-body">
+                                    <p class="h4">Total Employees</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <router-outlet></router-outlet>
+            </div>
+            <!-- /#page-content-wrapper -->
+        </div>
+    </div>
+    <!-- /#wrapper -->

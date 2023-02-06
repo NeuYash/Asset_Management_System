@@ -1,0 +1,106 @@
+
+html {
+    box-sizing: border-box;
+      margin: 40px auto;
+      text-align: center;
+  }
+  .about-section {
+    padding: 50px;
+    text-align: center;
+    background-color: #474e5d;
+    color: white;
+  }
+  
+  .column {
+    float: left;
+    width: 31.3%;
+    margin-bottom: 16px;
+    padding: 0 8px;
+  }
+   @media screen and (max-width: 650px) {
+    .column {
+      width: 100%;
+      display: block;
+    }
+  } 
+  .card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    margin: 8px;
+  }
+  .button {
+    border: none;
+    outline: 0;
+    display: inline-block;
+    padding: 8px;
+    color: white;
+    background-color: #000;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+  }
+  
+  .col {
+    float: center;
+    width: 50%;
+    margin: auto;
+    padding: 0 50px;
+    margin-top: 6px;
+  }
+  /* .fb {
+    background-color: blue;
+    color: white;
+    
+  } 
+  .fb:hover{
+    background-color: darkblue;
+    color: white;
+  }*/
+  .fa-linkedin {
+    background-color: #007bb5;
+    color: white;
+    width: 30%;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    margin: 10px 0;
+    opacity: 0.85;
+    display: inline-block;
+    font-size: 17px;
+    line-height: 15px;
+    text-decoration: none;
+    text-align: center;
+  }
+  .fa-linkedin:hover{
+    background-color: blue;
+    color: white;
+  }
+  input,
+.btn {
+  width: 94%;
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  margin: 5px 0;
+  opacity: 0.85;
+  display: inline-block;
+  font-size: 17px;
+  line-height: 15px;
+  text-decoration: none; /* remove underline from anchors */
+}
+
+.btn-linkedin {
+  background: #0E76A8;
+  border-radius: 0;
+  color: #fff;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #084461;
+}
+.btn-linkedin:link, .btn-linkedin:visited {
+  color: #fff;
+}
+.btn-linkedin:active, .btn-linkedin:hover {
+  background: #084461;
+  color: #fff;
+}
+  

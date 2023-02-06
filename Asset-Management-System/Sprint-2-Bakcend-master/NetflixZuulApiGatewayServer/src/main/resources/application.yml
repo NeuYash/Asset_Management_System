@@ -1,0 +1,115 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: https://eureka-server-asset-management.herokuapp.com/eureka
+spring:
+  application:
+    name: netflix-zuul-api-gateway-server
+zuul:
+  host:
+    socket-timeout-millis: 30000
+  routes:
+  
+  #Employee
+    #View
+    getEmployees:
+      path: /getEmployees
+      url: https://asset-mgmt-employee-service.herokuapp.com
+    findById:
+      path: /findById
+      url:  https://asset-mgmt-employee-service.herokuapp.com
+    findByName:
+      path: /findByName
+      url: https://asset-mgmt-employee-service.herokuapp.com
+    countEmployees:
+      path: /countEmployees
+      url: https://asset-mgmt-employee-service.herokuapp.com
+    getEmployeeIdsAndNames:
+      path: /getEmployeeIdsAndNames
+      url: https://asset-mgmt-employee-service.herokuapp.com
+    #Add
+    addEmployee:
+      path: /addEmployee
+      url: https://asset-mgmt-employee-service.herokuapp.com
+    updateEmployee:
+      path: /updateEmployee
+      url: https://asset-mgmt-employee-service.herokuapp.com
+    deleteEmployee:
+      path: /deleteEmployee
+      url: https://asset-mgmt-employee-service.herokuapp.com
+      
+  #Assets
+    #View
+    getAssets:
+      path: /getAssets
+      url: https://asset-view-service.herokuapp.com
+    isAssetUnallocated:
+     path: /isAssetUnallocated/{assetId}
+     url: https://asset-view-service.herokuapp.com
+    countAssets:
+      path: /countAssets
+      url: https://asset-view-service.herokuapp.com
+    findAssetById:
+      path: /findAssetById
+      url: https://asset-view-service.herokuapp.com
+    #Add
+    addAsset:
+      path: /addAsset/{quantity}
+      url: https://asset-update-service.herokuapp.com
+    updateAsset:
+      path: /updateAsset
+      url: https://asset-update-service.herokuapp.com
+    deleteAsset:
+      path: /deleteAsset
+      url: https://asset-update-service.herokuapp.com
+    getAssetIdsAndNames:
+      path: /getAssetIdsAndNames
+      url: https://asset-update-service.herokuapp.com
+    getAssetsByName:
+      path: /getAssetsByName/{assetName}
+      url: https://asset-update-service.herokuapp.com/
+        
+  #Allocation
+    viewAllocations:
+      path: /viewAllocations
+      url: https://asst-mgmt-allocation-service.herokuapp.com
+    raiseReq:
+      path: /raiseReq
+      url: https://asst-mgmt-allocation-service.herokuapp.com
+    changeStatus:
+      path: /changeStatus/{allocationId}/{status}
+      url: https://asst-mgmt-allocation-service.herokuapp.com
+    pendingrequests:
+      path: /pendingrequests
+      url: https://asst-mgmt-allocation-service.herokuapp.com
+    countRequests:
+      path: /countRequests
+      url: https://asst-mgmt-allocation-service.herokuapp.com
+    countPending:
+      path: /countPending
+      url: https://asst-mgmt-allocation-service.herokuapp.com
+    findByEmployee:
+      path: /findByEmployee/{employeeId}
+      url: https://asst-mgmt-allocation-service.herokuapp.com
+    findByAsset:
+      path: /findByAsset/{assetId}
+      url: https://asst-mgmt-allocation-service.herokuapp.com
+    findByAllocId:
+      path: /findById/{allocationId}
+      url: https://asst-mgmt-allocation-service.herokuapp.com
+  #Auth
+    login:
+      path: /login
+      url: https://asset-mgmt-auth-service.herokuapp.com
+    addManager:
+      path: /addManager
+      url: https://asset-mgmt-auth-service.herokuapp.com
+    getManagers:
+      path: /getManagers
+      url: https://asset-mgmt-auth-service.herokuapp.com
+    updateManager:
+      path: /updateManager
+      url: https://asset-mgmt-auth-service.herokuapp.com
+    deleteManager:
+      path: /deleteManager/{userId}
+      url: https://asset-mgmt-auth-service.herokuapp.com

@@ -1,0 +1,7 @@
+2020-05-09 11:15:01.809  INFO 11180 --- [main] com.cg.EmployeeUpdateServiceApplication  : No active profile set, falling back to default profiles: default
+2020-05-09 11:15:03.298  WARN 11180 --- [main] o.s.boot.actuate.endpoint.EndpointId     : Endpoint ID 'service-registry' contains invalid characters, please migrate to a valid format.
+2020-05-09 11:15:04.304  WARN 11180 --- [main] c.n.c.sources.URLConfigurationSource     : No URLs will be polled as dynamic configuration sources.
+2020-05-09 11:15:05.900  WARN 11180 --- [main] c.n.c.sources.URLConfigurationSource     : No URLs will be polled as dynamic configuration sources.
+2020-05-09 11:15:07.189  WARN 11180 --- [main] ockingLoadBalancerClientRibbonWarnLogger : You already have RibbonLoadBalancerClient on your classpath. It will be used by default. As Spring Cloud Ribbon is in maintenance mode. We recommend switching to BlockingLoadBalancerClient instead. In order to use it, set the value of `spring.cloud.loadbalancer.ribbon.enabled` to `false` or remove spring-cloud-starter-netflix-ribbon from your project.
+2020-05-09 11:15:13.037  INFO 11180 --- [main] com.cg.EmployeeUpdateServiceApplication  : Started EmployeeUpdateServiceApplication in 13.142 seconds (JVM running for 14.615)
+2020-05-09 11:15:25.967  WARN 11180 --- [RMI TCP Connection(9)-127.0.0.1] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1589003125966, current=DOWN, previous=UP]

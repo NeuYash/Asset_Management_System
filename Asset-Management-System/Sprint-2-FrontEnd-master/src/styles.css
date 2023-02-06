@@ -1,0 +1,26 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { 
+    margin: 0; 
+    font-family: Roboto, "Helvetica Neue", sans-serif; 
+    background-image: url("./assets/wooded_flora.png");
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+.errorText{
+    color: red;
+}
+
+thead{
+    background: darkslategrey;
+    color: whitesmoke;
+}
+
+.card-header{
+    background-color: darkslategrey;
+    color: whitesmoke;
+}

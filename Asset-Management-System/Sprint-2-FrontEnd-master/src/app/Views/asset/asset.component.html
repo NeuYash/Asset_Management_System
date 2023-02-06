@@ -1,0 +1,266 @@
+<div class="container">
+    <div *ngIf='router.url == "/admin/dashboard/asset/add"'>
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="card bg-transparent">
+                    <div class="card-header">
+                        <p class="h1 text-center"><i class="fa fa-plus"></i> Add Asset</p>
+                    </div>
+                    <form #addAssetForm="ngForm" (submit)='onSubmit(addAssetForm)'>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <input type="text" placeholder="Asset Name" name="assetName" class="form-control"
+                                    [(ngModel)]='assetName' #asstName="ngModel" required>
+                                <span *ngIf='!asstName.valid && asstName.touched'>
+                                    <p class="errorText">Enter asset name.</p>
+                                </span>
+                            </div>
+                            <div class="form-group">
+                                <label for="radio">Status: &nbsp;&nbsp;</label>
+                                <input type="radio" name="status" value="allocated" #asstStat="ngModel"
+                                    [(ngModel)]="status" required> Allocated
+                                &nbsp;&nbsp;
+                                <input type="radio" name="status" value="unallocated" #asstStat="ngModel"
+                                    [(ngModel)]="status" required> Unallocated
+                            </div>
+                            <div class="form-group">
+                                <input type="number" name="assetQuantity" class="form-control" [(ngModel)]='quantity'
+                                    #qty='ngModel' min="1" placeholder="Quantity" required />
+                                <span class="errorText" *ngIf='qty.touched && qty.value <= 0 '>
+                                    Enter valid quantity
+                                </span>
+                            </div>
+                            <div class="form-group">
+                                <textarea placeholder="Description" name="assetDes" [(ngModel)]='assetDes'
+                                    class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" [disabled]='!addAssetForm.form.valid || qty.value<=0'
+                                class="btn btn-primary"><i class="fa fa-plus"></i> Add </button>
+                        </div>
+                    </form>
+                    <div class="alert alert-success alert-dismissible" *ngIf='isAdded'>
+                        <button href="#" class="close" data-dismiss="alert" aria-label="close"
+                            (click)='addAssetForm.reset();isAdded = false'>&times;</button>
+                        <strong>Success !</strong> Asset added.
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+    </div>
+    <div *ngIf='router.url == "/admin/dashboard/asset/view"'>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <h1 class="text-center"><i class="fas fa-boxes"></i> Assets</h1>
+                    </div>
+                    <div style="overflow-x: auto;">
+                        <div class="container">
+                            <div class="form-group float-left">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">
+                                            <i class="fa fa-search"></i>
+                                        </span>
+                                    </div>
+                                    <input (keyup)="onKey($event)" class="form-control" placeholder="Search asset..." />
+                                </div>
+                            </div>
+                            <div ngbDropdown class="float-right">
+                                <button class="btn" id="dropdownBasic1" ngbDropdownToggle>View By Status</button>
+                                <br>
+                                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                    <button ngbDropdownItem (click)='assets1 = assets'>All</button>
+                                    <button ngbDropdownItem (click)='viewAllocated()'>Allocated</button>
+                                    <button ngbDropdownItem (click)='viewUnallocated()'>Unallocated</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="alert alert-danger" *ngIf='isDeleteError'>
+                            <button href="#" class="close" (click)='isDeleteError = false'>&times;</button>
+                            <strong>Error !</strong> Allocated asset can't be removed.
+                        </div>
+                        <table class="table table-hover table-striped table-bordered">
+                            <caption *ngIf='isLoading'>
+                                <div class="spinner-border"></div>&nbsp;&nbsp;Loading...
+                            </caption>
+                            <caption *ngIf='!isLoading'>
+                                List of all assets.
+                                <select class="form-control float-right col-md-2" [(ngModel)]='bucketSize'>
+                                    <option value="5">5</option>
+                                    <option value="10">10</option>
+                                    <option value="15">15</option>
+                                </select>
+                                <label class="float-right" style="padding-top: 0.5rem;">Items per
+                                    page:&nbsp;&nbsp;</label>
+                            </caption>
+                            <thead class="clickable">
+                                <td (click)='sortById()'>
+                                    <i class="fas fa-sort" *ngIf='sortedById'></i> &nbsp;Asset Id
+                                </td>
+                                <td (click)='sortByName()'>
+                                    <i class="fas fa-sort" *ngIf='sortedByName'></i> &nbsp;Asset Name
+                                </td>
+                                <td (click)='sortByDes()'>
+                                    <i class="fas fa-sort" *ngIf='sortedByDes'></i> &nbsp;Description
+                                </td>
+                                <td>Status</td>
+                                <td colspan="2">Action</td>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor='let asst of assets1| paginate: { itemsPerPage: bucketSize, currentPage: p}'>
+                                    <td>
+                                        {{asst.assetId}}
+                                    </td>
+                                    <td>
+                                        {{asst.assetName}}
+                                    </td>
+                                    <td>
+                                        {{ asst.assetDes }}
+                                    </td>
+                                    <td>
+                                        {{ asst.status }}
+                                    </td>
+                                    <td data-toggle="tooltip" title="Update asset">
+                                        <i class="fas fa-edit clickable" data-toggle="modal" data-target="#updateModal"
+                                            (click)='
+                                            assetId = asst.assetId;
+                                            assetName = asst.assetName;
+                                            assetDes = asst.assetDes;
+                                            status = asst.status
+                                            '></i>
+                                    </td>
+                                    <td data-toggle="tooltip" title="Delete asset">
+                                        <i class="fas fa-trash clickable" (click)='deleteAsset(asst.assetId)'></i>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="updateModal" tabindex="-1" role="dialog"
+                        aria-labelledby="updateModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title" id="updateModalLabel"><i class="fa fa-edit"></i> Edit Asset
+                                    </h1>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form #updateForm='ngForm' (submit)='onUpdate(updateForm)'>
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <input type="text" placeholder="Asset Id" name="assetId"
+                                                    class="form-control" [(ngModel)]='assetId' #asstId="ngModel"
+                                                    required readOnly>
+                                                <span *ngIf='!asstId.valid && asstId.touched'>
+                                                    <p class="errorText">Enter asset id.</p>
+                                                </span>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" placeholder="Asset Name" name="assetName"
+                                                    class="form-control" [(ngModel)]='assetName' #asstName="ngModel"
+                                                    required>
+                                                <span *ngIf='!asstName.valid && asstName.touched'>
+                                                    <p class="errorText">Enter asset name.</p>
+                                                </span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="radio">Status: &nbsp;&nbsp;</label>
+                                                <input type="radio" name="status" value="allocated" #asstStat="ngModel"
+                                                    [(ngModel)]="status" required> Allocated
+                                                &nbsp;&nbsp;
+                                                <input type="radio" name="status" value="unallocated"
+                                                    #asstStat="ngModel" [(ngModel)]="status" required> Unallocated
+                                            </div>
+                                            <div class="form-group">
+                                                <textarea placeholder="Description" name="assetDes"
+                                                    [(ngModel)]='assetDes' class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer">
+                                            <button type="submit" [disabled]='!updateForm.valid'
+                                                class="btn btn-primary"><i class="fa fa-sync" aria-hidden="true"></i>
+                                                Update</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf='router.url == "/manager/dashboard/asset/view"'>
+        <div class="container" style="overflow-x: auto;">
+            <h1 class="text-center"><i class="fas fa-clipboard-list"></i>&nbsp; List of Assets</h1><br>
+            <div class="input-group mb-3 float-left col-md-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">
+                        <i class="fa fa-search"></i>
+                    </span>
+                </div>
+                <input (keyup)="onKey($event)" class="form-control" placeholder="Search asset..." />
+            </div>
+            <select class="form-control float-right col-md-2" [(ngModel)]='bucketSize'>
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
+            </select>
+            <label class="float-right" style="padding-top: 0.5rem;">Items per
+                page:&nbsp;&nbsp;</label>
+            <table class="table table-bordered table-hover table-striped text-center">
+                <caption *ngIf='isLoading'>
+                    <div class="spinner-border"></div>&nbsp;&nbsp;Loading...
+                </caption>
+                <caption>
+                    List of all assets
+                </caption>
+                <thead class="clickable">
+                    <td (click)='sortById()'>
+                        <i class="fas fa-sort" *ngIf='sortedById'></i> &nbsp;Asset Id
+                    </td>
+                    <td (click)='sortByName()'>
+                        <i class="fas fa-sort" *ngIf='sortedByName'></i> &nbsp;Asset Name
+                    </td>
+                    <td (click)='sortByDes()'>
+                        <i class="fas fa-sort" *ngIf='sortedByDes'></i> &nbsp;Description
+                    </td>
+                    <td>Status</td>
+                    <td> Request</td>
+                </thead>
+                <tbody>
+                    <tr *ngFor='let asset of assets1| paginate: { itemsPerPage: bucketSize, currentPage: p}'>
+                        <td>
+                            {{asset.assetId}}
+                        </td>
+                        <td>
+                            {{asset.assetName}}
+                        </td>
+                        <td>
+                            {{ asset.assetDes }}
+                        </td>
+                        <td>
+                            {{ asset.status }}
+                        </td>
+                        <td class="clickable">
+                            <button class="btn btn-sm" (click)='routeRequest(asset.assetId)'
+                                [disabled]='asset.status == "allocated"'>
+                                <i class="fa fa-paper-plane"></i>
+                            </button>
+                        </td>
+                </tbody>
+            </table>
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
+    </div>
+</div>

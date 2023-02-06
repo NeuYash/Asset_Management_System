@@ -1,0 +1,3 @@
+2020-04-28 14:50:46 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "TEST" not found; SQL statement:
+INSERT INTO TEST VALUES(1, 'Aditya','qwerty123','admin') [42102-200]

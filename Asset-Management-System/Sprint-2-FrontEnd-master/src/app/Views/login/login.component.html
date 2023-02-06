@@ -1,0 +1,72 @@
+<div class="jumbotron text-center bg-transparent">
+    <div class="float-right">
+        <a href="../../../assets/About/about-us.html" target="_"><i class="fa fa-info"></i> About Us</a>
+    </div>
+    <h1 class="display-4">Asset Management System</h1>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="alert alert-warning alert-dismissible" *ngIf='isInvalidAttempt'>
+                <button href="#" class="close" data-dismiss="alert" aria-label="close"
+                    (click)='isInvalidAttempt = false'>&times;</button>
+                <strong><i class="fa fa-exclamation-triangle"></i> Warning !</strong> You need to be logged-in to view
+                this content.
+            </div>
+            <div class="card bg-transparent">
+                <div class="card-header">
+                    <h4 class=" display-4 text-center">Login</h4>
+                </div>
+                <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i></span>
+                                </div>
+                                <input type="text" placeholder="Username" #uName="ngModel" name="userName"
+                                    class="form-control" [(ngModel)]='userName' required />
+                            </div>
+                            <span *ngIf='!uName.valid && uName.touched'>
+                                <p class="errorText">Please enter username</p>
+                            </span>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1"><i class="fa fa-key"></i></span>
+                                </div>
+                                <input type={{inputType}} placeholder="Password" #pwd="ngModel" name="passWord"
+                                    class="form-control" [(ngModel)]='password' required />
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><a class="fa fa-eye clickable"
+                                            (click)='toggle()'></a></span>
+                                </div>
+                            </div>
+                            <span *ngIf='!pwd.valid && pwd.touched'>
+                                <p class="errorText">Please enter password</p>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary" [disabled]='! loginForm.valid || isLogginIn'>
+                            <div class="spinner-border spinner-border-sm" *ngIf='isLogginIn'></div>&nbsp;
+                            <i class="fas fa-sign-in-alt"></i> Login
+
+                        </button>
+                    </div>
+                </form>
+                <span *ngIf='!loginSucc'>
+                    <div class="alert alert-danger alert-dismissible">
+                        <button href="#" class="close" data-dismiss="alert" (click)='loginSucc=true'
+                            aria-label="close">&times;</button>
+                        <strong>Error !</strong> {{ errMsg }}
+                    </div>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</div>

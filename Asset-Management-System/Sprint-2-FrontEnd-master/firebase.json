@@ -1,0 +1,17 @@
+{
+  "hosting": {
+    "public": "dist/Asset-Management-FrontEnd",
+    "site": "asset-management-ui",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
